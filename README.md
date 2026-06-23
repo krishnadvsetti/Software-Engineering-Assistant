@@ -1,1 +1,1 @@
-# Software-Engineering-Platform
+# Software-Engineering-Assistant
