@@ -1,22 +1,42 @@
+import logging
+
 from fastapi import FastAPI
 
-from app.api.v1.router import router
+from app.api.v1.router import api_router
 from app.core.config import settings
-from app.core.logging import setup_logging
+from app.core.logging import configure_logging
 
-setup_logging()
+configure_logging()
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
-    title=settings.APP_NAME,
-    version=settings.APP_VERSION,
-    description="AI-powered Software Engineering Workspace",
+    title=settings.PROJECT_NAME,
+    version=settings.VERSION,
+    description="AI Software Engineering Workspace",
 )
 
-app.include_router(router, prefix=settings.API_PREFIX)
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Starting Software Engineering Assistant...")
 
 
-@app.get("/")
-def root():
+@app.on_event("shutdown")
+async def shutdown_event():
+    logger.info("Shutting down Software Engineering Assistant...")
+
+
+app.include_router(
+    api_router,
+    prefix=settings.API_V1_PREFIX,
+)
+
+
+@app.get("/", tags=["Root"])
+async def root():
     return {
-        "message": f"{settings.APP_NAME} API is running."
+        "project": settings.PROJECT_NAME,
+        "version": settings.VERSION,
+        "message": "Welcome to the AI Software Engineering Workspace",
     }
