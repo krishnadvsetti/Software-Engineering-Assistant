@@ -3,6 +3,8 @@ from app.agents.management.product_manager import ProductManager
 from app.agents.management.scrum_manager import ScrumManager
 from app.registry.agent_registry import AgentRegistry
 from app.agents.development.requirements_analyst import RequirementsAnalyst
+from app.agents.development.system_architect import SystemArchitect
+from app.agents.development.repository_analyst import RepositoryAnalyst
 
 
 def create_agent_registry() -> AgentRegistry:
@@ -17,6 +19,16 @@ def create_agent_registry() -> AgentRegistry:
     registry.register(
         "Product Manager",
         ProductManager(),
+    )
+
+    registry.register(
+    "Repository Analyst",
+    RepositoryAnalyst(),
+    )
+
+    registry.register(
+    "System Architect",
+    SystemArchitect(),
     )
 
     registry.register(

@@ -10,10 +10,12 @@ class SoftwareEngineeringWorkflow:
     def run(
         self,
         user_request: str,
+        project_path: str,
     ) -> WorkflowState:
 
         state: WorkflowState = {
             "user_request": user_request,
+            "project_path": project_path,
             "current_agent": "",
             "completed_agents": [],
             "artifacts": {},
@@ -24,7 +26,9 @@ class SoftwareEngineeringWorkflow:
             "Engineering Manager",
             "Product Manager",
             "Requirements Analyst",
-            "Scrum Manager",
+            "System Architect",
+            "Repository Analyst",
+            "Scrum Manager"
         ]
 
         for agent_name in execution_order:

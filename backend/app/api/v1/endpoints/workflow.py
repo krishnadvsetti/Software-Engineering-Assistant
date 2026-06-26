@@ -1,5 +1,9 @@
 from fastapi import APIRouter
 
+from app.schemas.workflow import (
+    WorkflowRequest,
+    WorkflowResponse,
+)
 from app.workflows.software_engineering_workflow import (
     SoftwareEngineeringWorkflow,
 )
@@ -10,11 +14,18 @@ router = APIRouter(
 )
 
 
-@router.post("/run")
-def run_workflow(request: dict):
+@router.post(
+    "/run",
+    response_model=WorkflowResponse,
+)
+def run_workflow(
+    request: WorkflowRequest,
+):
 
     workflow = SoftwareEngineeringWorkflow()
 
-    return workflow.run(
-        request["user_request"]
+    result = workflow.run(
+        request.user_request
     )
+
+    return result
